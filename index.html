@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blondie0815 | Archiv der gepflegten Erschöpfung</title>
+    <style>
+        :root {
+            --bg-color: #0f0f0f;
+            --accent-color: #d4a373; /* Ein sanfter, "blonder" Gold-Ton */
+            --accent-rgb: 212,163,115;
+            --text-main: #e0e0e0;
+            --text-dim: #888;
+            --card-bg: #1a1a1a;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Hero Section */
+        header {
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-bottom: 1px solid #333;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: -2px;
+            color: var(--accent-color);
+        }
+
+        .subtitle {
+            font-style: italic;
+            color: var(--text-dim);
+            font-size: 1.2rem;
+        }
+
+        /* Sections */
+        section {
+            padding: 4rem 0;
+            border-bottom: 1px solid #222;
+        }
+
+        h2 {
+            color: var(--accent-color);
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Grid für Content-Säulen */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            transition: transform 0.18s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.02);
+            --glow: 0;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.4), 0 0 calc(var(--glow) * 18px) rgba(var(--accent-rgb), calc(var(--glow) * 0.18));
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            margin-top: 0;
+            color: #fff;
+        }
+
+        /* Card glow when cursor is near */
+        .card::after{
+            content: '';
+            pointer-events: none;
+            position: absolute;
+            inset: 0;
+            border-radius: 8px;
+            box-shadow: 0 0 calc(var(--glow) * 22px) rgba(var(--accent-rgb), calc(var(--glow) * 0.12));
+            transition: box-shadow 0.12s linear;
+            mix-blend-mode: screen;
+            opacity: calc(0.6 * var(--glow));
+        }
+
+        /* ZZZ spawn animation */
+        .zzz {
+            position: fixed;
+            left: 0;
+            top: 0;
+            transform: translate(-50%, -50%) rotate(-15deg);
+            font-weight: 700;
+            color: var(--accent-color);
+            pointer-events: none;
+            opacity: 0;
+            animation: zzzAnim 1400ms cubic-bezier(.2,.6,.2,1) forwards;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.6);
+        }
+
+        @keyframes zzzAnim {
+            0% { transform: translate(-50%, -20%) scale(0.9) rotate(-8deg); opacity: 1; }
+            60% { transform: translate(-50%, -140%) scale(1.05) rotate(-2deg); opacity: 0.9; }
+            100% { transform: translate(-50%, -240%) scale(1.12) rotate(2deg); opacity: 0; }
+        }
+
+        /* toast for random word on click */
+        .word-toast{
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(20,20,20,0.9);
+            color: var(--accent-color);
+            padding: 0.6rem 1rem;
+            border-radius: 999px;
+            font-weight: 700;
+            opacity: 0;
+            pointer-events: none;
+            animation: toastIn 1600ms ease forwards;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+        }
+
+        @keyframes toastIn{
+            0% { transform: translate(-50%, -40%) scale(0.95); opacity: 0; }
+            10% { opacity: 1; }
+            80% { opacity: 1; transform: translate(-50%, -120%) scale(1.02); }
+            100% { opacity: 0; transform: translate(-50%, -180%) scale(0.98); }
+        }
+
+        /* Zitat-Stil */
+        .quote-box {
+            background: #111;
+            border-left: 4px solid var(--accent-color);
+            padding: 2rem;
+            margin: 2rem 0;
+            font-style: italic;
+        }
+
+        /* Social Links */
+        .links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: bold;
+            border: 1px solid var(--accent-color);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        a:hover {
+            background: var(--accent-color);
+            color: #000;
+        }
+
+        /* Link bubble / shield / flee styles */
+        .links { position: relative; }
+        .links a { position: relative; display: inline-block; }
+
+        .speech-bubble {
+            position: fixed;
+            padding: 0.6rem 0.9rem;
+            background: rgba(30,30,30,0.95);
+            color: var(--text-main);
+            border-radius: 12px;
+            border: 1px solid rgba(var(--accent-rgb),0.12);
+            box-shadow: 0 8px 22px rgba(0,0,0,0.6);
+            transform-origin: center center;
+            z-index: 9999;
+            pointer-events: none;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .speech-bubble .part { display: inline-block; transition: transform 280ms ease; }
+        .speech-split .left { transform: translateX(-8px); }
+        .speech-split .right { transform: translateX(8px); }
+
+        .shield {
+            position: fixed;
+            width: 140px;
+            height: 140px;
+            background: linear-gradient(180deg, rgba(220,220,220,0.06), rgba(0,0,0,0.15));
+            border-radius: 10px;
+            border: 2px solid rgba(var(--accent-rgb),0.14);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+            z-index: 9998;
+            transform: translateY(-400px) rotate(6deg);
+            animation: shieldFall 700ms cubic-bezier(.2,.6,.2,1) forwards;
+            pointer-events: none; /* don't block clicks underneath */
+            transform-origin: top left;
+            transition: transform 600ms cubic-bezier(.2,.6,.2,1);
+        }
+
+        @keyframes shieldFall {
+            to { transform: translateY(10px) rotate(0deg); }
+        }
+
+        .link-flee {
+            transition: transform 200ms ease;
+        }
+
+        /* YouTube drop effect */
+        .youtube-dropped {
+            transform: translateY(14px) !important;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-dim);
+            font-size: 0.8rem;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            background: #333;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Animated background blobs */
+        .animated-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .animated-bg .blob {
+            position: absolute;
+            width: 420px;
+            height: 420px;
+            border-radius: 50%;
+            filter: blur(80px);
+            transform: translate3d(0,0,0);
+            animation: float 12s ease-in-out infinite;
+            mix-blend-mode: screen;
+            opacity: 0.9;
+        }
+
+        .animated-bg .b1 { left: -10%; top: -12%; background: radial-gradient(circle at 25% 25%, rgba(212,163,115,0.18), transparent 40%); animation-duration: 16s; }
+        .animated-bg .b2 { right: -8%; top: 18%; width: 360px; height: 360px; background: radial-gradient(circle at 50% 50%, rgba(100,150,255,0.09), transparent 45%); animation-duration: 11s; }
+        .animated-bg .b3 { left: 8%; bottom: -16%; width: 520px; height: 520px; background: radial-gradient(circle at 40% 60%, rgba(180,90,200,0.07), transparent 45%); animation-duration: 20s; }
+
+        @keyframes float {
+            0% { transform: translateY(0) translateX(0) rotate(0deg); }
+            50% { transform: translateY(-40px) translateX(30px) rotate(30deg); }
+            100% { transform: translateY(0) translateX(0) rotate(0deg); }
+        }
+
+        /* ensure main content sits above background */
+        .container, header, section, footer { position: relative; z-index: 1; }
+
+        /* Custom cursor styles */
+        #custom-cursor {
+            position: fixed;
+            z-index: 9999;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%) scale(1);
+            transition: transform .12s ease, background .12s ease, width .12s ease, height .12s ease;
+            border: 2px solid rgba(212,163,115,0.95);
+            background: rgba(255,255,255,0.02);
+            mix-blend-mode: difference;
+            backdrop-filter: blur(2px);
+            display: block;
+        }
+
+        .cursor--hover { transform: translate(-50%, -50%) scale(1.8); background: rgba(212,163,115,0.12); }
+
+        /* keep default cursor hidden on pointer devices; touch devices handled in JS */
+        @media (hover: hover) and (pointer: fine) {
+            html, body { cursor: none; }
+            a, button, input, textarea { cursor: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="animated-bg">
+        <div class="blob b1"></div>
+        <div class="blob b2"></div>
+        <div class="blob b3"></div>
+    </div>
+
+    <div id="custom-cursor" aria-hidden="true"></div>
+
+    <div class="container">
+        <header>
+            <div class="status-badge">Zustand: Chronisch müde, aber online</div>
+            <h1>Blondie0815</h1>
+            <p class="subtitle">Willkommen im Archiv der gepflegten existenziellen Erschöpfung.</p>
+            <div class="links">
+                <a href="https://www.twitch.tv/blondie0815" data-role="twitch">Twitch</a>
+                <a href="https://www.youtube.com/@MissBlondie" data-role="youtube">YouTube</a>
+                <a href="https://www.instagram.com/itsblondie0815/" data-role="instagram">Instagram</a>
+                <a href="https://discord.com/invite/jS3TtAn" data-role="discord">Discord</a>
+                <a href="https://linktr.ee/blondie0815?utm_source=ig&utm_medium=social&utm_content=link_in_bio" data-role="shop" id="shop-link">le links</a>
+            </div>
+        </header>
+
+        <section id="about">
+            <h2>Wer ist das eigentlich?</h2>
+            <p>
+                Ich spiele Spiele, damit ich mich nicht mit der Realität auseinandersetzen muss. 
+                Manchmal lese ich Dinge vor, weil meine Stimme scheinbar besser funktioniert als mein Skill in Minecraft.
+                Wenn du nach Pro-Gaming suchst, bist du hier falsch. Wenn du nach jemandem suchst, der beim Laufen in Videospielen gegen Wände läuft – willkommen zu Hause.
+            </p>
+            
+            <div class="quote-box">
+                "Mein Gaming-Stil? Eine Mischung aus 'Was mache ich hier?' und 'Oh Gott, ein Zombie!'"
+            </div>
+        </section>
+
+        <section id="focus">
+            <h2>Was dich hier erwartet</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Das Archiv des Scheiterns</h3>
+                    <p>Gameplay-Clips, die beweisen, dass Talent optional ist. Hauptsache die Atmosphäre stimmt.</p>
+                </div>
+                <div class="card">
+                    <h3>Deep Talk & Melancholie</h3>
+                    <p>Zitate, die weh tun und Video-Essays über Dinge, über die man nachts um 3 Uhr nachdenkt.</p>
+                </div>
+                <div class="card">
+                    <h3>Vorlese-Stunden</h3>
+                    <p>Für alle, die mein Gameplay nicht ertragen, aber zum Klang meiner Stimme einschlafen wollen.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="community">
+            <h2>Die Selbsthilfegruppe (Discord)</h2>
+            <p>Wir sind ein Haufen Introvertierter, die versuchen, so zu tun, als hätten wir alles im Griff. Tritt bei, wenn du auch gerne über Pixel und Weltschmerz philosophierst.</p>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 Your Mother Solutions [https://ym-s.netlify.app] | Hardware ist nicht schuld an meiner Inkompetenz.</p>
+        </footer>
+    </div>
+
+    <script>
+    (function(){
+        const cursor = document.getElementById('custom-cursor');
+        if(!cursor) return;
+
+        document.addEventListener('mousemove', function(e){
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        }, {passive:true});
+
+        // Add hover/focus effects for interactive elements
+        const interactives = 'a,button,input,textarea,label,[role="button"]';
+        document.querySelectorAll(interactives).forEach(function(el){
+            el.addEventListener('mouseenter', function(){ cursor.classList.add('cursor--hover'); });
+            el.addEventListener('mouseleave', function(){ cursor.classList.remove('cursor--hover'); });
+            el.addEventListener('focus', function(){ cursor.classList.add('cursor--hover'); });
+            el.addEventListener('blur', function(){ cursor.classList.remove('cursor--hover'); });
+        });
+
+        // Hide visual cursor on touch devices
+        function isTouch(){ return ('ontouchstart' in window) || navigator.maxTouchPoints > 0; }
+        if(isTouch()){
+            cursor.style.display = 'none';
+            document.documentElement.style.cursor = 'auto';
+            document.body.style.cursor = 'auto';
+        }
+    })();
+    </script>
+
+    <script>
+    (function(){
+        const words = ['le opfer','müde','ieeee MENSCHEN','was machst du hier?','ist dein leben soo langweilig?','Z Z Z Z'];
+
+        const links = Array.from(document.querySelectorAll('.links a'));
+        if(!links.length) return;
+
+        // Twitch: speech bubble that splits on hover
+        function handleTwitch(el){
+            let bubble;
+            el.addEventListener('pointerenter', () => {
+                bubble = document.createElement('div');
+                bubble.className = 'speech-bubble';
+                const left = document.createElement('span'); left.className='part left'; left.textContent='Willst du das wirklich? ';
+                const right = document.createElement('span'); right.className='part right'; right.textContent='Ist dein leben so beschissen?';
+                bubble.appendChild(left); bubble.appendChild(right);
+                const r = el.getBoundingClientRect();
+                bubble.style.left = (r.left + r.width/2) + 'px';
+                bubble.style.top = (r.top - 48) + 'px';
+                document.body.appendChild(bubble);
+                // trigger split
+                requestAnimationFrame(()=> bubble.classList.add('speech-split'));
+            });
+            el.addEventListener('pointerleave', () => { if(bubble) bubble.remove(); bubble = null; });
+        }
+
+        // YouTube: drop slightly and show a brief message
+        function handleYoutube(el){
+            let active = false;
+            el.addEventListener('pointerenter', () => {
+                if(active) return;
+                el.classList.add('youtube-dropped');
+                const r = el.getBoundingClientRect();
+                const t = document.createElement('div');
+                t.className = 'word-toast';
+                t.textContent = 'Ich bin zu unmotiviert dafür';
+                // position the toast over / slightly above the button
+                t.style.left = (r.left + r.width/2) + 'px';
+                t.style.top = (r.top) + 'px';
+                document.body.appendChild(t);
+                setTimeout(()=> t.remove(), 1600);
+                active = true;
+            });
+            el.addEventListener('pointerleave', () => {
+                el.classList.remove('youtube-dropped');
+                active = false;
+            });
+        }
+
+        // Instagram: works only after fourth hover (counts hovers instead of clicks)
+        function handleInstagram(el){
+            el.dataset.count = 0;
+            el.addEventListener('pointerenter', (e)=>{
+                let c = parseInt(el.dataset.count,10) || 0; c++;
+                el.dataset.count = c;
+                if(c < 4){
+                    const t = document.createElement('div'); t.className='word-toast'; t.textContent = `Noch ${4-c} Hover(s)`;
+                    const r = el.getBoundingClientRect(); t.style.left = (r.left + r.width/2) + 'px'; t.style.top = (r.top - 30) + 'px'; document.body.appendChild(t); setTimeout(()=> t.remove(),1400);
+                } else {
+                    const t = document.createElement('div'); t.className='word-toast'; t.textContent = `Instagram funktioniert jetzt.`;
+                    const r = el.getBoundingClientRect(); t.style.left = (r.left + r.width/2) + 'px'; t.style.top = (r.top - 30) + 'px'; document.body.appendChild(t); setTimeout(()=> t.remove(),1600);
+                }
+            });
+        }
+
+        // Discord: flees up to 6 times then reveals message (hover-triggered)
+        function handleDiscord(el){
+            let fleeCount = 0;
+            let moving = false;
+            let shownMessage = false;
+            const maxFlees = 6;
+            function tryFlee(e){
+                const r = el.getBoundingClientRect();
+                const cx = r.left + r.width/2; const cy = r.top + r.height/2;
+                const dx = cx - e.clientX; const dy = cy - e.clientY;
+                const dist = Math.sqrt(dx*dx + dy*dy);
+                if(dist < 140 && !moving && fleeCount < maxFlees){
+                    moving = true; fleeCount++;
+                    const angle = Math.atan2(dy, dx);
+                    const push = 140 + Math.random()*60;
+                    const tx = Math.cos(angle) * (push);
+                    const ty = Math.sin(angle) * (push);
+                    el.classList.add('link-flee');
+                    el.style.transform = `translate(${tx}px, ${ty}px)`;
+                    setTimeout(()=>{ moving = false; }, 220);
+                }
+                // after exhausting flees, show the message once when user hovers near
+                if(fleeCount >= maxFlees && !shownMessage && dist < 220){
+                    shownMessage = true;
+                    const t = document.createElement('div'); t.className='word-toast'; t.textContent = 'Du willst es wirklich oder? Mein Beileid.';
+                    const rr = el.getBoundingClientRect(); t.style.left = (rr.left + rr.width/2) + 'px'; t.style.top = (rr.top - 30) + 'px'; document.body.appendChild(t); setTimeout(()=> t.remove(),1800);
+                }
+            }
+            el.addEventListener('pointermove', tryFlee, {passive:true});
+        }
+
+        // le Shop: swaps label to random word on hover (pointerenter)
+        function handleShop(el){
+            el.addEventListener('pointerenter', (e)=>{
+                const choice = words[Math.floor(Math.random()*words.length)];
+                el.textContent = choice;
+            });
+        }
+
+        // attach handlers by data-role
+        links.forEach(link => {
+            const role = link.dataset.role;
+            if(role === 'twitch') handleTwitch(link);
+            if(role === 'youtube') handleYoutube(link);
+            if(role === 'instagram') handleInstagram(link);
+            if(role === 'discord') handleDiscord(link);
+            if(role === 'shop') handleShop(link);
+        });
+    })();
+    </script>
+
+    <script>
+    (function(){
+        // Card proximity glow + hover Z emitter + click random word
+        const cards = Array.from(document.querySelectorAll('.grid .card'));
+        if(!cards.length) return;
+
+        // words for random selection
+        const words = [
+            'le opfer',
+            'müde',
+            'ieeee MENSCHEN',
+            'was machst du hier?',
+            'ist dein leben soo langweilig?',
+            'Z Z Z Z'
+        ];
+
+        // proximity update on pointermove
+        const maxDist = 260; // px
+        document.addEventListener('pointermove', function(e){
+            const x = e.clientX, y = e.clientY;
+            cards.forEach(card => {
+                const r = card.getBoundingClientRect();
+                const cx = r.left + r.width/2;
+                const cy = r.top + r.height/2;
+                const dx = cx - x;
+                const dy = cy - y;
+                const d = Math.sqrt(dx*dx + dy*dy);
+                let intensity = Math.max(0, 1 - (d / maxDist));
+                // ease the value
+                intensity = Math.pow(intensity, 1.4);
+                card.style.setProperty('--glow', intensity.toFixed(3));
+                // subtle border color shift based on intensity
+                const base = 12 + Math.round(intensity * 28);
+                card.style.borderColor = `rgba(${getComputedStyle(document.documentElement).getPropertyValue('--accent-rgb') || '212,163,115'}, ${0.04 + intensity * 0.28})`;
+            });
+        }, {passive:true});
+
+        // Hover: spawn Zs periodically
+        const hoverIntervals = new WeakMap();
+
+        function spawnZAt(card){
+            const r = card.getBoundingClientRect();
+            const z = document.createElement('span');
+            z.className = 'zzz';
+            // random small offset around top-right quarter
+            const offsetX = (Math.random() * (r.width*0.6)) - (r.width*0.3);
+            const px = Math.round(r.left + r.width/2 + offsetX);
+            const py = Math.round(r.top + 20 + Math.random()*10);
+            z.style.left = px + 'px';
+            z.style.top = py + 'px';
+            // sometimes multiple Zs with different sizes
+            const count = 1 + Math.floor(Math.random()*2);
+            z.textContent = 'Z';
+            z.style.fontSize = (14 + Math.round(Math.random()*12)) + 'px';
+            document.body.appendChild(z);
+            z.addEventListener('animationend', () => z.remove());
+            // small chance to spawn an additional 'Z'
+            if(count > 1){
+                setTimeout(()=>{
+                    const z2 = z.cloneNode(true);
+                    z2.style.left = (px + 18) + 'px';
+                    z2.style.top = (py + 6) + 'px';
+                    document.body.appendChild(z2);
+                    z2.addEventListener('animationend', () => z2.remove());
+                }, 120);
+            }
+        }
+
+        cards.forEach(card => {
+            card.addEventListener('pointerenter', () => {
+                if(hoverIntervals.has(card)) return;
+                spawnZAt(card);
+                const id = setInterval(()=> spawnZAt(card), 520);
+                hoverIntervals.set(card, id);
+            });
+            card.addEventListener('pointerleave', () => {
+                const id = hoverIntervals.get(card);
+                if(id) clearInterval(id);
+                hoverIntervals.delete(card);
+            });
+
+            card.addEventListener('click', (ev) => {
+                ev.preventDefault();
+                const choice = words[Math.floor(Math.random()*words.length)];
+                showWordToast(choice, card);
+            });
+        });
+
+        function showWordToast(text, card){
+            const r = card.getBoundingClientRect();
+            const t = document.createElement('div');
+            t.className = 'word-toast';
+            t.textContent = text;
+            // place near card top center
+            const left = Math.round(r.left + r.width/2);
+            const top = Math.round(r.top - 10);
+            t.style.left = left + 'px';
+            t.style.top = top + 'px';
+            document.body.appendChild(t);
+            // remove after animation
+            setTimeout(()=> t.remove(), 1600);
+        }
+    })();
+    </script>
+
+</body>
+</html>
